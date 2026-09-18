@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inteligencia de Marca | Juan Valdez vs. Competencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine:#6E1423;
+    --wine-dark:#3B0B13;
+    --wine-soft:#8C2233;
+    --gold:#C9973E;
+    --gold-soft:#E8D5A8;
+    --cream:#F6EFE2;
+    --cream-2:#EEE2C8;
+    --paper:#FFFCF5;
+    --ink:#2A211B;
+    --ink-soft:#6b5f54;
+    --line: rgba(42,33,27,0.12);
+
+    --oma:#C8102E;
+    --tostao:#E9A612;
+    --tostao-ink:#5C4008;
+    --sbx:#00704A;
+
+    --radius-s:6px;
+    --radius-m:12px;
+    --radius-l:22px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Fraunces',serif;}
+  p{color:var(--ink-soft); line-height:1.65;}
+  a{color:inherit;}
+  button{font-family:inherit; cursor:pointer;}
+  :focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--wine);
+    border-bottom:3px solid var(--wine-dark);
+  }
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px; max-width:1180px; margin:0 auto; gap:24px; flex-wrap:wrap;
+  }
+  .wordmark{display:flex; align-items:baseline; gap:10px;}
+  .wordmark strong{
+    color:#fff; font-family:'Fraunces',serif; font-weight:700; font-size:1.15rem; letter-spacing:0.5px;
+  }
+  .wordmark span{color:var(--gold-soft); font-size:0.72rem; letter-spacing:0.06em;}
+
+  .brand-filter{display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{
+    border:1px solid rgba(255,255,255,0.35);
+    background:transparent;
+    color:#f4ece0;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:0.82rem;
+    font-weight:600;
+    transition:background .18s, color .18s, border-color .18s;
+    display:flex; align-items:center; gap:7px;
+  }
+  .chip .dot{width:8px; height:8px; border-radius:50%; background:currentColor;}
+  .chip:hover{border-color:var(--gold);}
+  .chip.active{background:var(--gold); color:var(--wine-dark); border-color:var(--gold);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:64px 0 40px; border-bottom:1px solid var(--line);}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;}
+  .eyebrow-tag{
+    display:inline-block; background:var(--wine); color:#fff; font-size:0.72rem;
+    padding:5px 12px; border-radius:999px; letter-spacing:0.03em; margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.2rem, 4vw, 3.2rem);
+    line-height:1.06;
+    font-weight:600;
+    color:var(--wine-dark);
+    margin:0 0 20px;
+    max-width:14ch;
+  }
+  .hero p.lead{font-size:1.05rem; max-width:46ch; margin-bottom:22px;}
+  .hero-meta{display:flex; gap:28px; margin-top:28px;}
+  .hero-meta div strong{display:block; font-family:'Fraunces',serif; font-size:1.5rem; color:var(--wine);}
+  .hero-meta div span{font-size:0.78rem; color:var(--ink-soft);}
+
+  .map-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-l);
+    padding:24px 24px 16px; box-shadow:0 18px 40px -22px rgba(59,11,19,0.35);
+  }
+  .map-card h3{margin:0 0 2px; font-size:1.05rem; color:var(--wine-dark);}
+  .map-card .sub{font-size:0.8rem; color:var(--ink-soft); margin-bottom:6px;}
+  #posMap{width:100%; height:auto; display:block;}
+  .map-dot{cursor:pointer; transition:transform .15s;}
+  .map-dot:hover, .map-dot.is-active{transform:scale(1.18);}
+  .map-dot circle{transform-box:fill-box; transform-origin:center;}
+  .pos-info{
+    margin-top:6px; padding:14px 16px; background:var(--cream); border-radius:var(--radius-m);
+    border-left:4px solid var(--wine);
+  }
+  .pos-info h4{margin:0 0 4px; font-size:0.95rem; font-family:'Fraunces',serif;}
+  .pos-info p{margin:0; font-size:0.85rem;}
+
+  /* ---------- SECTION SHELLS ---------- */
+  section.block{padding:56px 0; border-bottom:1px solid var(--line);}
+  .block-head{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:30px; flex-wrap:wrap;}
+  .block-head h2{font-size:1.7rem; color:var(--wine-dark); margin:0 0 6px; font-weight:600;}
+  .block-head p{margin:0; max-width:60ch; font-size:0.92rem;}
+  .kicker{font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); font-weight:700; display:block; margin-bottom:8px;}
+
+  /* ---------- STAT STRIP ---------- */
+  .stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+  .stat-card{
+    background:var(--paper); border-radius:var(--radius-m); padding:20px 18px;
+    border-top:5px solid var(--brand-color, var(--wine));
+    box-shadow:0 10px 24px -18px rgba(0,0,0,0.4);
+    transition:opacity .2s, transform .2s;
+  }
+  .stat-card.dim{opacity:0.4;}
+  .stat-card.is-active{transform:translateY(-4px);}
+  .stat-card h4{margin:0 0 6px; font-size:1.05rem; font-family:'Fraunces',serif;}
+  .stat-card .tag{
+    display:inline-block; font-size:0.7rem; font-weight:700; color:#fff; background:var(--brand-color, var(--wine));
+    padding:3px 9px; border-radius:999px; margin-bottom:10px;
+  }
+  .stat-card p{font-size:0.83rem; margin:0;}
+  .price-bar{display:flex; gap:4px; margin-top:12px;}
+  .price-bar span{flex:1; height:6px; border-radius:3px; background:var(--line);}
+  .price-bar span.on{background:var(--brand-color, var(--wine));}
+
+  /* ---------- RADAR ---------- */
+  .radar-wrap{display:grid; grid-template-columns:1fr 320px; gap:40px; align-items:center;}
+  #radarChart{width:100%; height:auto;}
+  .radar-legend{display:flex; flex-direction:column; gap:10px;}
+  .legend-item{
+    display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-s);
+    border:1px solid var(--line); background:var(--paper); font-size:0.85rem; font-weight:600;
+    transition:opacity .2s;
+  }
+  .legend-item input{accent-color:var(--brand-color);}
+  .legend-item .sw{width:12px; height:12px; border-radius:3px; background:var(--brand-color);}
+  .legend-item.off{opacity:0.35;}
+
+  /* ---------- VARIABLE EXPLORER ---------- */
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px;}
+  .vchip{
+    padding:9px 15px; border-radius:999px; border:1px solid var(--line); background:var(--paper);
+    font-size:0.83rem; font-weight:600; color:var(--ink-soft); transition:all .15s;
+  }
+  .vchip:hover{border-color:var(--wine-soft); color:var(--wine-dark);}
+  .vchip.active{background:var(--wine); color:#fff; border-color:var(--wine);}
+
+  .compare-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .compare-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-m);
+    padding:18px; transition:opacity .2s, box-shadow .2s;
+  }
+  .compare-card.dim{opacity:0.38;}
+  .compare-card.is-active{box-shadow:0 14px 30px -18px rgba(0,0,0,0.45); border-color:var(--brand-color);}
+  .compare-card .tag{
+    display:inline-block; font-size:0.7rem; font-weight:700; color:#fff; background:var(--brand-color);
+    padding:3px 9px; border-radius:999px; margin-bottom:10px;
+  }
+  .compare-card p{font-size:0.85rem; margin:0; color:var(--ink);}
+
+  .toggle-table-btn{
+    margin-top:26px; background:none; border:1px solid var(--wine); color:var(--wine-dark);
+    padding:10px 18px; border-radius:999px; font-size:0.85rem; font-weight:700;
+  }
+  .toggle-table-btn:hover{background:var(--wine); color:#fff;}
+  .full-table-wrap{overflow-x:auto; margin-top:22px; display:none;}
+  .full-table-wrap.open{display:block;}
+  table{border-collapse:collapse; width:100%; font-size:0.82rem;}
+  th,td{padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top;}
+  th{background:var(--cream-2); color:var(--wine-dark); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em;}
+  tr:hover td{background:rgba(110,20,35,0.04);}
+
+  /* ---------- KEYWORDS ---------- */
+  .kw-tabs{display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap;}
+  .kw-panel{display:none; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-m); padding:26px;}
+  .kw-panel.open{display:block;}
+  .kw-group h5{margin:0 0 12px; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft);}
+  .kw-cloud{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px;}
+  .kw-tag{
+    padding:6px 14px; border-radius:999px; background:var(--cream); border:1px solid var(--line);
+    color:var(--ink); white-space:nowrap;
+  }
+  .kw-tag.lg{font-size:1.05rem; font-weight:700; background:var(--brand-color); color:#fff; border-color:transparent;}
+  .kw-tag.md{font-size:0.9rem; font-weight:600;}
+  .kw-tag.sm{font-size:0.78rem;}
+  .kw-search{
+    width:100%; padding:12px 16px; border-radius:999px; border:1px solid var(--line);
+    margin-bottom:22px; font-size:0.9rem; background:var(--cream);
+  }
+  .kw-tag.hide{display:none;}
+
+  /* ---------- CRITIQUE ACCORDION ---------- */
+  .accordion-item{border:1px solid var(--line); border-radius:var(--radius-m); margin-bottom:14px; overflow:hidden; background:var(--paper);}
+  .accordion-btn{
+    width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px;
+    background:none; border:none; padding:18px 22px; text-align:left;
+  }
+  .accordion-btn .num{font-family:'Fraunces',serif; color:var(--gold); font-size:1.3rem; margin-right:12px;}
+  .accordion-btn h4{margin:0; font-size:1rem; color:var(--wine-dark); display:inline;}
+  .accordion-btn .plus{font-size:1.4rem; color:var(--wine); transition:transform .2s; flex-shrink:0;}
+  .accordion-item.open .plus{transform:rotate(45deg);}
+  .accordion-panel{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .accordion-panel .inner{padding:0 22px 20px 58px;}
+  .accordion-panel .inner p{margin:0; font-size:0.9rem;}
+
+  footer{padding:34px 0; text-align:center; color:var(--ink-soft); font-size:0.8rem;}
+
+  @media(max-width:960px){
+    .hero-grid{grid-template-columns:1fr;}
+    .stat-grid, .compare-grid{grid-template-columns:1fr 1fr;}
+    .radar-wrap{grid-template-columns:1fr;}
+  }
+  @media(max-width:600px){
+    .wrap{padding:0 18px;}
+    .stat-grid, .compare-grid{grid-template-columns:1fr;}
+    .header-inner{padding:14px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="wordmark">
+      <strong>Juan Valdez</strong>
+      <span>Inteligencia de marca</span>
+    </div>
+    <div class="brand-filter" id="brandFilter">
+      <button class="chip active" data-brand="all">Todas</button>
+      <button class="chip" data-brand="jv"><span class="dot" style="color:#C9973E"></span>Juan Valdez</button>
+      <button class="chip" data-brand="oma"><span class="dot" style="color:#E4657A"></span>Oma</button>
+      <button class="chip" data-brand="tostao"><span class="dot" style="color:#F4CF6B"></span>Tostao'</button>
+      <button class="chip" data-brand="sbx"><span class="dot" style="color:#7FCDAE"></span>Starbucks</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow-tag">Benchmarking · Sep. 2026</span>
+        <h1>Así compite el café de Colombia</h1>
+        <p class="lead">Un panorama comparativo de Juan Valdez frente a Oma, Tostao' y Starbucks: cómo se posicionan, a quién le hablan y qué terreno está en disputa.</p>
+        <p style="font-size:0.85rem;">Toca un punto del mapa o un nombre en el filtro superior para seguir esa marca a través de todo el panel.</p>
+        <div class="hero-meta">
+          <div><strong>4</strong><span>marcas analizadas</span></div>
+          <div><strong>11</strong><span>variables de marketing</span></div>
+          <div><strong>+500K</strong><span>familias caficultoras FNC</span></div>
+        </div>
+      </div>
+
+      <div class="map-card">
+        <h3>Mapa de posicionamiento</h3>
+        <p class="sub">Precio percibido × nivel de experiencia en tienda</p>
+        <svg id="posMap" viewBox="0 0 400 320" role="img" aria-label="Mapa de posicionamiento precio versus experiencia"></svg>
+        <div class="pos-info" id="posInfo"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAT STRIP -->
+  <section class="block">
+    <div class="wrap">
+      <div class="block-head">
+        <div>
+          <span class="kicker">Perfil rápido</span>
+          <h2>Cuatro formas de vender café</h2>
+        </div>
+        <p>Un vistazo al nicho, precio y ritmo de redes de cada competidor antes de entrar al detalle.</p>
+      </div>
+      <div class="stat-grid" id="statGrid"></div>
+    </div>
+  </section>
+
+  <!-- RADAR -->
+  <section class="block">
+    <div class="wrap">
+      <div class="block-head">
+        <div>
+          <span class="kicker">Lectura cruzada</span>
+          <h2>Cinco frentes de la competencia</h2>
+        </div>
+        <p>Puntajes de 1 a 5 con base en el análisis cualitativo de cada marca. Oculta o muestra marcas desde la leyenda.</p>
+      </div>
+      <div class="radar-wrap">
+        <svg id="radarChart" viewBox="0 0 340 320"></svg>
+        <div class="radar-legend" id="radarLegend"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIABLE EXPLORER -->
+  <section class="block" id="matriz">
+    <div class="wrap">
+      <div class="block-head">
+        <div>
+          <span class="kicker">Explorador</span>
+          <h2>Variable por variable</h2>
+        </div>
+        <p>Elige una variable de marketing y compara de una sola mirada cómo la resuelve cada marca.</p>
+      </div>
+      <div class="chip-row" id="varChips"></div>
+      <div class="compare-grid" id="compareGrid"></div>
+
+      <button class="toggle-table-btn" id="toggleTableBtn">Ver matriz completa en tabla ▾</button>
+      <div class="full-table-wrap" id="fullTableWrap">
+        <table id="fullTable"></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEYWORDS -->
+  <section class="block" id="keywords">
+    <div class="wrap">
+      <div class="block-head">
+        <div>
+          <span class="kicker">SEO comparado</span>
+          <h2>Qué busca la gente de cada marca</h2>
+        </div>
+        <p>Términos de marca y de intención de búsqueda. El tamaño aproxima su peso dentro de la conversación digital.</p>
+      </div>
+      <input type="text" class="kw-search" id="kwSearch" placeholder="Filtrar keywords, por ejemplo: café, precio, cerca de mí...">
+      <div class="kw-tabs" id="kwTabs"></div>
+      <div id="kwPanels"></div>
+    </div>
+  </section>
+
+  <!-- CRITIQUE -->
+  <section class="block" id="critica" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="block-head">
+        <div>
+          <span class="kicker">Lectura estratégica</span>
+          <h2>Qué le dicen estos datos a Juan Valdez</h2>
+        </div>
+      </div>
+      <div id="accordion"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">Juan Valdez Coffee — Panel de inteligencia competitiva. Prototipo para uso interno de estrategia de marca.</div>
+</footer>
+
+<script>
+const BRANDS = {
+  jv: {
+    name:"Juan Valdez", short:"JV", color:"#6E1423", price:2,
+    pos:{x:70,y:80}, radar:[4,4,5,3,5],
+    nicho:"Nivel medio-alto y alto: amantes del café de origen, profesionales, turistas y compradores con conciencia social y ambiental.",
+    redes:"Instagram, Facebook, LinkedIn y TikTok con enfoque editorial cuidado; ritmo moderado de 3 a 4 publicaciones por semana.",
+    tono:"Cercano, orgulloso y patrio. Habla desde la tierra, el caficultor y la tradición cafetera colombiana.",
+    publicacion:"Reconocimientos al caficultor y campañas de sostenibilidad y empoderamiento femenino cafetero, con alta carga emocional.",
+    valor:"Origen 100% colombiano certificado y modelo de negocio que retribuye directamente a más de 500.000 familias caficultoras de la FNC.",
+    canal:"Tiendas propias, supermercados, e-commerce propio, apps de delivery y exportación internacional.",
+    geografia:"Fuerte presencia nacional con expansión selectiva internacional en EE.UU., España, Latam y Medio Oriente.",
+    storytelling:"\u201cEl café de todo un país\u201d: la mula Conchita, el sombrero y el paisaje cafetero como símbolos de identidad nacional.",
+    servicio:"Atención en tienda, línea de servicio al cliente, mensajes directos en redes y formulario web de PQR.",
+    portafolio:"Café empacado de origen, bebidas espresso, nevados y pastelería tradicional o gourmet. Precio medio-alto.",
+    kwBranded:[["café juan valdez",5],["tienda juan valdez",4],["comprar café colombiano",4],["nevados juan valdez",3]],
+    kwSecondary:[["mejor café de origen",4],["café premium colombia",4],["sostenibilidad cafetera",3],["exportación de café",3]]
+  },
+  oma: {
+    name:"Oma", short:"OMA", color:"#C8102E", price:2,
+    pos:{x:55,y:55}, radar:[3,3,3,2,3],
+    nicho:"Nivel medio y medio-alto: adultos contemporáneos, entorno corporativo y espacios institucionales como hospitales y centros comerciales.",
+    redes:"Facebook e Instagram con actividad moderada; narrativa visual poco arriesgada frente al resto de la categoría.",
+    tono:"Tradicional, institucional y funcional, con poca innovación en el relato de marca.",
+    publicacion:"Promociones puntuales de combos de café y panadería, y anuncios de apertura de nuevos puntos de venta.",
+    valor:"Pionero histórico del \u201ccafé gourmet\u201d colombiano, con fuerte reconocimiento en espacios institucionales de alto tránsito.",
+    canal:"Kioscos, cafés gourmet propios, puntos en centros comerciales y canal institucional u hospitalario.",
+    geografia:"Enfoque nacional y urbano, con alta densidad de puntos en Bogotá y las principales ciudades.",
+    storytelling:"\u201cEl primer café gourmet de Colombia\u201d: la narrativa gira en torno a la pausa del día y la reunión ejecutiva.",
+    servicio:"Línea telefónica de atención, formulario de PQR institucional y presencia moderada en redes sociales.",
+    portafolio:"Bebidas clásicas de café, almuerzos ligeros y repostería tradicional. Precio medio-alto.",
+    kwBranded:[["café oma",5],["tiendas oma bogotá",3],["oma gourmet",3],["menú oma",3]],
+    kwSecondary:[["café corporativo",3],["reuniones en café",2],["pastelería tradicional colombiana",3],["tinto oma precio",2]]
+  },
+  tostao: {
+    name:"Tostao'", short:"TOS", color:"#E9A612", price:1,
+    pos:{x:15,y:20}, radar:[1,3,3,3,4],
+    nicho:"Nivel bajo y medio, consumo masivo: estudiantes y trabajadores que buscan rapidez y bajo costo, sin permanencia en tienda.",
+    redes:"Instagram, Facebook y TikTok con tono humorístico y alta frecuencia de publicación, casi diaria.",
+    tono:"Popular, directo y accesible, con lenguaje cotidiano colombiano.",
+    publicacion:"Precios redondos de $1.000 a $2.000 y memes sobre \u201caguantar la jornada\u201d con café, con alta viralidad.",
+    valor:"Precios ultra competitivos bajo un modelo de conveniencia con alta densidad operativa.",
+    canal:"Tiendas de formato pequeño en esquinas de alto flujo peatonal y estaciones de transporte.",
+    geografia:"Alta densidad geográfica urbana local, con foco en Bogotá y ciudades intermedias.",
+    storytelling:"\u201cCafé y pan para todos\u201d: desmitifica el café como lujo y apuesta por la accesibilidad universal.",
+    servicio:"Respuesta rápida por redes sociales y atención directa en el punto de venta, sin línea telefónica dedicada.",
+    portafolio:"Café tinto y con leche de consumo masivo, panadería horneada en tienda y bebidas frías empacadas. Precio bajo.",
+    kwBranded:[["tostao café y pan",5],["tostao menú",3],["precios tostao",3],["tostao cerca de mí",4]],
+    kwSecondary:[["desayuno barato",3],["pan barato bogotá",3],["café rápido y económico",3],["promociones tostao",2]]
+  },
+  sbx: {
+    name:"Starbucks", short:"SBX", color:"#00704A", price:3,
+    pos:{x:90,y:85}, radar:[5,5,4,5,1],
+    nicho:"Nivel alto, Gen-Z y millennials: profesionales jóvenes, universitarios y nómadas digitales.",
+    redes:"Instagram, TikTok y Facebook con estética altamente cuidada, enfocada en producto y estilo de vida.",
+    tono:"Aspiracional, moderno y visual, con la personalización como eje narrativo.",
+    publicacion:"Lanzamientos estacionales como el Pumpkin Spice Latte y vasos coleccionables con contenido generado por usuarios.",
+    valor:"La \u201cExperiencia Starbucks\u201d: estatus social, personalización extrema del pedido y ambiente pensado para trabajo remoto.",
+    canal:"Tiendas de gran formato con alto confort, wifi y sofás, en zonas de ingresos altos y sectores comerciales prime.",
+    geografia:"Presencia global consolidada, con ubicaciones selectas y prime dentro de cada ciudad.",
+    storytelling:"\u201cInspirar y nutrir el espíritu humano\u201d: el nombre del cliente escrito en el vaso como eje de la experiencia.",
+    servicio:"App Starbucks Rewards con chat y soporte in-app, redes sociales y atención estandarizada en tienda.",
+    portafolio:"Frappuccinos, bebidas estacionales con jarabes, métodos de filtrado internacional y sándwiches gourmet. Precio alto.",
+    kwBranded:[["starbucks colombia",5],["frappuccino starbucks",4],["vaso starbucks",3],["starbucks cerca de mí",4]],
+    kwSecondary:[["lugar para trabajar con laptop",3],["bebidas frías de café",3],["merchandising starbucks",2],["café para estudiantes",2]]
+  }
+};
+const ORDER = ["jv","oma","tostao","sbx"];
+
+const VARS = [
+  {key:"nicho", label:"Nicho de mercado"},
+  {key:"redes", label:"Redes sociales"},
+  {key:"tono", label:"Tono de comunicación"},
+  {key:"publicacion", label:"Publicación destacada"},
+  {key:"valor", label:"Valor diferencial"},
+  {key:"canal", label:"Canal de venta"},
+  {key:"geografia", label:"Posicionamiento geográfico"},
+  {key:"storytelling", label:"Storytelling"},
+  {key:"servicio", label:"Servicio al cliente"},
+  {key:"portafolio", label:"Portafolio y precios"}
+];
+
+const RADAR_AXES = ["Premium / precio","Alcance geográfico","Storytelling","Digitalización","Cercanía cultural"];
+
+let activeBrand = "all";
+let activeVar = "nicho";
+
+/* ---------- HERO POSITION MAP ---------- */
+function renderPosMap(){
+  const svg = document.getElementById("posMap");
+  const pad = 44, w = 400, h = 320;
+  function px(x){ return pad + (x/100) * (w - pad*1.4); }
+  function py(y){ return (h-40) - (y/100) * (h - 80); }
+
+  let parts = "";
+  parts += `<line x1="${pad}" y1="${h-40}" x2="${w-20}" y2="${h-40}" stroke="var(--ink-soft)" stroke-opacity="0.4"/>`;
+  parts += `<line x1="${pad}" y1="${h-40}" x2="${pad}" y2="20" stroke="var(--ink-soft)" stroke-opacity="0.4"/>`;
+  parts += `<text x="${(w-20+pad)/2}" y="${h-14}" text-anchor="middle" font-size="11" fill="var(--ink-soft)">Precio percibido \u2192</text>`;
+  parts += `<text x="14" y="${(20+h-40)/2}" text-anchor="middle" font-size="11" fill="var(--ink-soft)" transform="rotate(-90 14 ${(20+h-40)/2})">Experiencia \u2192</text>`;
+
+  ORDER.forEach(key=>{
+    const b = BRANDS[key];
+    const cx = px(b.pos.x), cy = py(b.pos.y);
+    parts += `<g class="map-dot" data-brand="${key}" id="dot-${key}">
+      <circle cx="${cx}" cy="${cy}" r="11" fill="${b.color}" stroke="#fff" stroke-width="3"/>
+      <text x="${cx}" y="${cy - 16}" text-anchor="middle" font-size="11" font-weight="700" fill="${b.color}">${b.short}</text>
+    </g>`;
+  });
+  svg.innerHTML = parts;
+
+  svg.querySelectorAll(".map-dot").forEach(dot=>{
+    dot.addEventListener("click", ()=> setActiveBrand(dot.dataset.brand));
+  });
+}
+
+function updatePosInfo(){
+  const key = activeBrand === "all" ? "jv" : activeBrand;
+  const b = BRANDS[key];
+  document.getElementById("posInfo").innerHTML =
+    `<h4 style="color:${b.color}">${b.name}</h4><p>${b.valor}</p>`;
+  document.querySelectorAll(".map-dot").forEach(d=>{
+    d.classList.toggle("is-active", d.dataset.brand === key);
+  });
+}
+
+/* ---------- STAT STRIP ---------- */
+function renderStats(){
+  const grid = document.getElementById("statGrid");
+  grid.innerHTML = ORDER.map(key=>{
+    const b = BRANDS[key];
+    const bars = [1,2,3].map(n=>`<span class="${n<=b.price?'on':''}"></span>`).join("");
+    return `<div class="stat-card" data-brand="${key}" style="--brand-color:${b.color}">
+      <span class="tag">${b.short}</span>
+      <h4>${b.name}</h4>
+      <p>${b.nicho.split(".")[0]}.</p>
+      <div class="price-bar" title="Nivel de precio">${bars}</div>
+    </div>`;
+  }).join("");
+}
+
+/* ---------- RADAR ---------- */
+let radarVisible = {jv:true, oma:true, tostao:true, sbx:true};
+
+function polar(cx,cy,r,angleDeg){
+  const a = (Math.PI/180) * (angleDeg - 90);
+  return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+}
+
+function renderRadar(){
+  const svg = document.getElementById("radarChart");
+  const cx = 150, cy = 150, maxR = 110;
+  const n = RADAR_AXES.length;
+  let parts = "";
+
+  for(let lvl=1; lvl<=5; lvl++){
+    const r = (lvl/5)*maxR;
+    const pts = [];
+    for(let i=0;i<n;i++){
+      const [x,y] = polar(cx,cy,r,(360/n)*i);
+      pts.push(`${x},${y}`);
+    }
+    parts += `<polygon points="${pts.join(" ")}" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+  }
+
+  for(let i=0;i<n;i++){
+    const [x,y] = polar(cx,cy,maxR,(360/n)*i);
+    parts += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)" stroke-width="1"/>`;
+    const [lx,ly] = polar(cx,cy,maxR+26,(360/n)*i);
+    parts += `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="10.5" fill="var(--ink-soft)">${RADAR_AXES[i]}</text>`;
+  }
+
+  ORDER.forEach(key=>{
+    if(!radarVisible[key]) return;
+    const b = BRANDS[key];
+    const pts = b.radar.map((val,i)=>{
+      const r = (val/5)*maxR;
+      const [x,y] = polar(cx,cy,r,(360/n)*i);
+      return `${x},${y}`;
+    });
+    const isActive = activeBrand === key;
+    const isDimmed = activeBrand !== "all" && !isActive;
+    parts += `<polygon points="${pts.join(" ")}" fill="${b.color}" fill-opacity="${isActive?0.32:0.14}"
+      stroke="${b.color}" stroke-width="${isActive?3:2}" opacity="${isDimmed?0.25:1}"/>`;
+  });
+
+  svg.innerHTML = parts;
+}
+
+function renderRadarLegend(){
+  const wrap = document.getElementById("radarLegend");
+  wrap.innerHTML = ORDER.map(key=>{
+    const b = BRANDS[key];
+    return `<label class="legend-item ${radarVisible[key]?'':'off'}" style="--brand-color:${b.color}">
+      <input type="checkbox" data-brand="${key}" ${radarVisible[key]?'checked':''}>
+      <span class="sw"></span> ${b.name}
+    </label>`;
+  }).join("");
+  wrap.querySelectorAll("input").forEach(inp=>{
+    inp.addEventListener("change", ()=>{
+      radarVisible[inp.dataset.brand] = inp.checked;
+      renderRadarLegend();
+      renderRadar();
+    });
+  });
+}
+
+/* ---------- VARIABLE EXPLORER ---------- */
+function renderVarChips(){
+  const wrap = document.getElementById("varChips");
+  wrap.innerHTML = VARS.map(v=>
+    `<button class="vchip ${v.key===activeVar?'active':''}" data-var="${v.key}">${v.label}</button>`
+  ).join("");
+  wrap.querySelectorAll(".vchip").forEach(chip=>{
+    chip.addEventListener("click", ()=>{
+      activeVar = chip.dataset.var;
+      renderVarChips();
+      renderCompareGrid();
+    });
+  });
+}
+
+function renderCompareGrid(){
+  const grid = document.getElementById("compareGrid");
+  grid.innerHTML = ORDER.map(key=>{
+    const b = BRANDS[key];
+    const isActive = activeBrand === key;
+    const isDimmed = activeBrand !== "all" && !isActive;
+    return `<div class="compare-card ${isDimmed?'dim':''} ${isActive?'is-active':''}" style="--brand-color:${b.color}">
+      <span class="tag">${b.name}</span>
+      <p>${b[activeVar]}</p>
+    </div>`;
+  }).join("");
+}
+
+function renderFullTable(){
+  const table = document.getElementById("fullTable");
+  let head = "<thead><tr><th>Variable</th>" + ORDER.map(k=>`<th>${BRANDS[k].name}</th>`).join("") + "</tr></thead>";
+  let body = "<tbody>" + VARS.map(v=>{
+    return "<tr><td><strong>" + v.label + "</strong></td>" +
+      ORDER.map(k=>`<td>${BRANDS[k][v.key]}</td>`).join("") + "</tr>";
+  }).join("") + "</tbody>";
+  table.innerHTML = head + body;
+}
+
+/* ---------- KEYWORDS ---------- */
+function sizeClass(weight){
+  if(weight>=5) return "lg";
+  if(weight>=3) return "md";
+  return "sm";
+}
+
+function renderKwTabs(){
+  const tabs = document.getElementById("kwTabs");
+  tabs.innerHTML = ORDER.map((key,i)=>{
+    const b = BRANDS[key];
+    return `<button class="vchip kwtab ${i===0?'active':''}" data-brand="${key}">${b.name}</button>`;
+  }).join("");
+
+  const panels = document.getElementById("kwPanels");
+  panels.innerHTML = ORDER.map((key,i)=>{
+    const b = BRANDS[key];
+    const brandedTags = b.kwBranded.map(([t,w])=>`<span class="kw-tag ${sizeClass(w)}" style="--brand-color:${b.color}" data-term="${t}">${t}</span>`).join("");
+    const secTags = b.kwSecondary.map(([t,w])=>`<span class="kw-tag ${sizeClass(w)}" style="--brand-color:${b.color}" data-term="${t}">${t}</span>`).join("");
+    return `<div class="kw-panel ${i===0?'open':''}" data-brand="${key}">
+      <div class="kw-group">
+        <h5>Keywords de marca</h5>
+        <div class="kw-cloud">${brandedTags}</div>
+      </div>
+      <div class="kw-group">
+        <h5>Intención de búsqueda</h5>
+        <div class="kw-cloud">${secTags}</div>
+      </div>
+    </div>`;
+  }).join("");
+
+  tabs.querySelectorAll(".kwtab").forEach(tab=>{
+    tab.addEventListener("click", ()=>{
+      setActiveBrand(tab.dataset.brand === activeBrand ? "all" : tab.dataset.brand, true);
+    });
+  });
+}
+
+function syncKwTabs(){
+  const key = activeBrand === "all" ? ORDER[0] : activeBrand;
+  document.querySelectorAll(".kwtab").forEach(t=> t.classList.toggle("active", t.dataset.brand===key));
+  document.querySelectorAll(".kw-panel").forEach(p=> p.classList.toggle("open", p.dataset.brand===key));
+}
+
+document.addEventListener("input", (e)=>{
+  if(e.target.id !== "kwSearch") return;
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll(".kw-tag").forEach(tag=>{
+    const match = tag.dataset.term.toLowerCase().includes(q);
+    tag.classList.toggle("hide", q.length>0 && !match);
+  });
+});
+
+/* ---------- ACCORDION ---------- */
+const CRITIQUES = [
+  {
+    title:"El reto de la fidelización digital frente a Starbucks",
+    text:"Starbucks construyó un ecosistema de fidelización móvil basado en recompensas y personalización. Juan Valdez necesita reducir la fricción del pedido digital y personalizar sus incentivos para no perder al consumidor joven que prioriza la conveniencia tecnológica sobre la historia de origen."
+  },
+  {
+    title:"El riesgo del consumo de paso frente a Tostao'",
+    text:"Tostao' domina la compra por impulso matutina del transeúnte. Si Juan Valdez concentra su portafolio solo en la experiencia premium en mesa, cede terreno en el consumo rápido de alta frecuencia. Vale la pena reforzar formatos express sin diluir el valor percibido de la marca."
+  },
+  {
+    title:"La oportunidad de reforzar el storytelling de origen",
+    text:"Ni Oma, ni Tostao', ni Starbucks pueden replicar la legitimidad del origen colombiano. El relato de Juan Valdez no debería quedarse en la nostalgia: puede conectar con la trazabilidad, la sostenibilidad y el impacto social directo que valoran la Generación Z y los millennials conscientes."
+  }
+];
+
+function renderAccordion(){
+  const wrap = document.getElementById("accordion");
+  wrap.innerHTML = CRITIQUES.map((c,i)=>`
+    <div class="accordion-item" data-idx="${i}">
+      <button class="accordion-btn">
+        <span><span class="num">0${i+1}</span><h4>${c.title}</h4></span>
+        <span class="plus">+</span>
+      </button>
+      <div class="accordion-panel"><div class="inner"><p>${c.text}</p></div></div>
+    </div>
+  `).join("");
+
+  wrap.querySelectorAll(".accordion-item").forEach(item=>{
+    const btn = item.querySelector(".accordion-btn");
+    const panel = item.querySelector(".accordion-panel");
+    btn.addEventListener("click", ()=>{
+      const isOpen = item.classList.contains("open");
+      wrap.querySelectorAll(".accordion-item").forEach(other=>{
+        other.classList.remove("open");
+        other.querySelector(".accordion-panel").style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add("open");
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  });
+  wrap.querySelector(".accordion-item").dispatchEvent(new Event("noop"));
+  // open first by default
+  wrap.querySelector(".accordion-btn").click();
+}
+
+/* ---------- GLOBAL BRAND FILTER ---------- */
+function setActiveBrand(key, fromKw){
+  activeBrand = key;
+
+  document.querySelectorAll("#brandFilter .chip").forEach(chip=>{
+    chip.classList.toggle("active", chip.dataset.brand === key);
+  });
+
+  document.querySelectorAll(".stat-card").forEach(card=>{
+    const match = card.dataset.brand === key;
+    card.classList.toggle("dim", key!=="all" && !match);
+    card.classList.toggle("is-active", match && key!=="all");
+  });
+
+  updatePosInfo();
+  renderRadar();
+  renderCompareGrid();
+  if(!fromKw) syncKwTabs();
+  else syncKwTabs();
+}
+
+document.getElementById("brandFilter").addEventListener("click", (e)=>{
+  const chip = e.target.closest(".chip");
+  if(!chip) return;
+  setActiveBrand(chip.dataset.brand);
+});
+
+/* ---------- FULL TABLE TOGGLE ---------- */
+document.getElementById("toggleTableBtn").addEventListener("click", (e)=>{
+  const wrap = document.getElementById("fullTableWrap");
+  const open = wrap.classList.toggle("open");
+  e.target.textContent = open ? "Ocultar matriz completa \u25B4" : "Ver matriz completa en tabla \u25BE";
+});
+
+/* ---------- INIT ---------- */
+renderPosMap();
+updatePosInfo();
+renderStats();
+renderRadarLegend();
+renderRadar();
+renderVarChips();
+renderCompareGrid();
+renderFullTable();
+renderKwTabs();
+renderAccordion();
+</script>
+</body>
+</html>
